@@ -1,0 +1,25 @@
+{
+ "mode": "overlay_pinned",
+ "label": "overlay_pinned_001",
+ "verify": false,
+ "pps": 1000,
+ "duration": 10.0,
+ "t_fail_before_ns": 108319433663141,
+ "t_fail_applied_ns": 108319437125515,
+ "t_fail_wall_ns": 1795461528098231185,
+ "sender": {
+  "sent": 10000,
+  "send_errors": 0,
+  "pps": 1000,
+  "start_ns": 108317185164327,
+  "interval_ns": 1000000,
+  "size": 100
+ },
+ "detector": null,
+ "recv_csv": "raw/overlay_pinned_001.csv",
+ "rc": {
+  "sender": 0,
+  "receiver": 0,
+  "detector": null
+ }
+}

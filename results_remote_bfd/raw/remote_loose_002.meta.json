@@ -1,0 +1,25 @@
+{
+ "mode": "remote_loose",
+ "label": "remote_loose_002",
+ "verify": false,
+ "pps": 1000,
+ "duration": 10.0,
+ "t_fail_before_ns": 111533483841187,
+ "t_fail_applied_ns": 111533487131684,
+ "t_fail_wall_ns": 1795508330296057070,
+ "sender": {
+  "sent": 10000,
+  "send_errors": 0,
+  "pps": 1000,
+  "start_ns": 111531234447922,
+  "interval_ns": 1000000,
+  "size": 100
+ },
+ "detector": null,
+ "recv_csv": "raw/remote_loose_002.csv",
+ "rc": {
+  "sender": 0,
+  "receiver": 0,
+  "detector": null
+ }
+}

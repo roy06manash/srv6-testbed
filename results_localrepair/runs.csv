@@ -1,0 +1,31 @@
+mode,run,sent,received,lost,loss_pct,interruption_ms,detect_ms,repair_ms,recovery_ms,error
+overlay_off,overlay_off_000,10000,9988,12,0.12,12.021531,,,11.946923,
+overlay_off,overlay_off_001,10000,9989,11,0.11,211.170751,,,7282.89054,
+overlay_off,overlay_off_002,10000,9988,12,0.12,10.731177,,,11.1456,
+overlay_off,overlay_off_003,10000,9987,13,0.13,13.032615,,,12.206788,
+overlay_off,overlay_off_004,10000,9989,11,0.11,10.528522,,,9.911969,
+overlay_off,overlay_off_005,10000,9988,12,0.12,138.626315,,,6634.405817,
+overlay_off,overlay_off_006,10000,9988,12,0.12,11.372149,,,11.238886,
+overlay_off,overlay_off_007,10000,9989,11,0.11,11.018991,,,9.344308,
+overlay_off,overlay_off_008,10000,9989,11,0.11,11.021004,,,10.198313,
+overlay_off,overlay_off_009,10000,9989,11,0.11,11.021352,,,10.789248,
+overlay_pinned,overlay_pinned_000,10000,9985,15,0.15,27.881593,,,4861.388656,
+overlay_pinned,overlay_pinned_001,10000,9987,13,0.13,13.027479,,,12.07956,
+overlay_pinned,overlay_pinned_002,10000,9987,13,0.13,12.751041,,,12.644795,
+overlay_pinned,overlay_pinned_003,10000,9988,12,0.12,12.022875,,,11.926081,
+overlay_pinned,overlay_pinned_004,10000,9988,12,0.12,11.846074,,,11.409298,
+overlay_pinned,overlay_pinned_005,10000,9987,13,0.13,12.645868,,,12.948788,
+overlay_pinned,overlay_pinned_006,10000,9987,13,0.13,12.966109,,,12.553612,
+overlay_pinned,overlay_pinned_007,10000,9988,12,0.12,12.015921,,,11.191193,
+overlay_pinned,overlay_pinned_008,10000,9987,13,0.13,13.043116,,,13.000714,
+overlay_pinned,overlay_pinned_009,10000,9988,12,0.12,12.019708,,,10.365427,
+overlay_protected,overlay_protected_000,10000,10000,0,0.0,0.0,,,3760.157309,
+overlay_protected,overlay_protected_001,10000,10000,0,0.0,0.0,,,-1478.863108,largest gap precedes failure
+overlay_protected,overlay_protected_002,10000,10000,0,0.0,0.0,,,-1155.17864,largest gap precedes failure
+overlay_protected,overlay_protected_003,10000,10000,0,0.0,0.0,,,10.770565,
+overlay_protected,overlay_protected_004,10000,10000,0,0.0,0.0,,,-470.151683,largest gap precedes failure
+overlay_protected,overlay_protected_005,10000,10000,0,0.0,0.0,,,3090.901895,
+overlay_protected,overlay_protected_006,10000,10000,0,0.0,0.0,,,-1053.562152,largest gap precedes failure
+overlay_protected,overlay_protected_007,10000,9999,1,0.01,1.276617,,,-791.882123,largest gap precedes failure
+overlay_protected,overlay_protected_008,10000,9999,1,0.01,1.402082,,,3001.832271,
+overlay_protected,overlay_protected_009,10000,9999,1,0.01,1.59699,,,-888.148647,largest gap precedes failure

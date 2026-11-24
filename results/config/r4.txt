@@ -1,0 +1,46 @@
+### r4: ip -6 addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 state UNKNOWN qlen 1000
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: to3@to5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 state UP qlen 1000
+    inet6 2001:db8:34::4/64 scope global nodad 
+       valid_lft forever preferred_lft forever
+    inet6 fe80::a42f:a4ff:fedf:21ec/64 scope link 
+       valid_lft forever preferred_lft forever
+3: to5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 state UP qlen 1000
+    inet6 2001:db8:45::4/64 scope global nodad 
+       valid_lft forever preferred_lft forever
+    inet6 fe80::a0b0:e9ff:fe60:43bf/64 scope link 
+       valid_lft forever preferred_lft forever
+4: sid0: <BROADCAST,NOARP,UP,LOWER_UP> mtu 1500 state UNKNOWN qlen 1000
+    inet6 fe80::e8ff:ffff:feec:e8fe/64 scope link 
+       valid_lft forever preferred_lft forever
+
+### r4: ip -6 route
+2001:db8:34::/64 dev to3 proto kernel metric 256 pref medium
+2001:db8:45::/64 dev to5 proto kernel metric 256 pref medium
+2001:db8:a1::/64 via 2001:db8:34::3 dev to3 metric 1024 pref medium
+2001:db8:a5::/64 via 2001:db8:45::5 dev to5 metric 1024 pref medium
+fc00:4::1  encap seg6local action End dev sid0 metric 1024 pref medium
+fc00:5::/32 via 2001:db8:45::5 dev to5 metric 1024 pref medium
+fe80::/64 dev to3 proto kernel metric 256 pref medium
+fe80::/64 dev to5 proto kernel metric 256 pref medium
+fe80::/64 dev sid0 proto kernel metric 256 pref medium
+
+### r4: seg6 sysctls
+net.ipv4.conf.all.forwarding = 0
+net.ipv4.conf.default.forwarding = 0
+net.ipv4.conf.to3.forwarding = 0
+net.ipv4.conf.to5.forwarding = 0
+net.ipv6.conf.all.forwarding = 1
+net.ipv6.conf.all.seg6_enabled = 1
+net.ipv6.conf.all.seg6_require_hmac = 0
+net.ipv6.conf.default.forwarding = 1
+net.ipv6.conf.default.seg6_enabled = 1
+net.ipv6.conf.default.seg6_require_hmac = 0
+net.ipv6.conf.to3.forwarding = 1
+net.ipv6.conf.to3.seg6_enabled = 1
+net.ipv6.conf.to3.seg6_require_hmac = 0
+net.ipv6.conf.to5.forwarding = 1
+net.ipv6.conf.to5.seg6_enabled = 1
+net.ipv6.conf.to5.seg6_require_hmac = 0

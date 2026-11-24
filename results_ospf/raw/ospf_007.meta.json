@@ -1,0 +1,21 @@
+{
+ "mode": "ospf",
+ "label": "ospf_007",
+ "verify": false,
+ "pps": 1000,
+ "duration": 10.0,
+ "t_fail_applied_ns": 46040847987038,
+ "t_fail_wall_ns": 1795320858242986978,
+ "sender": {
+  "sent": 10000,
+  "send_errors": 0,
+  "pps": 1000,
+  "start_ns": 46038588252661,
+  "interval_ns": 1000000,
+  "size": 100
+ },
+ "detector": null,
+ "recv_csv": "raw/ospf_007.csv",
+ "ospf_hello_s": 1,
+ "ospf_dead_s": 3
+}

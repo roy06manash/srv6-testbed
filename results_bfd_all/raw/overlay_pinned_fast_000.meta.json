@@ -1,0 +1,35 @@
+{
+ "mode": "overlay_pinned_fast",
+ "label": "overlay_pinned_fast_000",
+ "verify": false,
+ "pps": 1000,
+ "duration": 10.0,
+ "t_fail_before_ns": 110660512189998,
+ "t_fail_applied_ns": 110660515399668,
+ "t_fail_wall_ns": 1795463869176505421,
+ "sender": {
+  "sent": 10000,
+  "send_errors": 0,
+  "pps": 1000,
+  "start_ns": 110658271361089,
+  "interval_ns": 1000000,
+  "size": 100
+ },
+ "detector": {
+  "interval_ms": 50.0,
+  "mult": 3,
+  "arm_after": 5,
+  "t_start_ns": 110658748743637,
+  "t_armed_ns": 110658948935019,
+  "t_detect_ns": 110660649331966,
+  "t_repair_done_ns": 110660662196393,
+  "repair_rc": 0,
+  "probes": 39
+ },
+ "recv_csv": "raw/overlay_pinned_fast_000.csv",
+ "rc": {
+  "sender": 0,
+  "receiver": 0,
+  "detector": 0
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "mode": "ipv6",
+ "label": "ipv6_verify",
+ "verify": true,
+ "pps": 1000,
+ "duration": 6.0,
+ "t_fail_before_ns": 4636963163120,
+ "t_fail_applied_ns": 4636966794081,
+ "t_fail_wall_ns": 1795243450296152248,
+ "sender": {
+  "sent": 6000,
+  "send_errors": 0,
+  "pps": 1000,
+  "start_ns": 4634702339477,
+  "interval_ns": 1000000,
+  "size": 100
+ },
+ "detector": {
+  "interval_ms": 50.0,
+  "mult": 3,
+  "arm_after": 5,
+  "t_start_ns": 4635097243006,
+  "t_armed_ns": 4635297341830,
+  "t_detect_ns": 4637100055454,
+  "t_repair_done_ns": 4637107171087,
+  "repair_rc": 0,
+  "probes": 40
+ },
+ "recv_csv": "raw/ipv6_verify.csv",
+ "rc": {
+  "sender": 0,
+  "receiver": 0,
+  "detector": 0
+ }
+}

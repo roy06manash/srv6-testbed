@@ -1,0 +1,35 @@
+{
+ "mode": "srv6",
+ "label": "srv6_005",
+ "verify": false,
+ "pps": 1000,
+ "duration": 6.0,
+ "t_fail_before_ns": 4443581318100,
+ "t_fail_applied_ns": 4443583742652,
+ "t_fail_wall_ns": 1795243256913100111,
+ "sender": {
+  "sent": 6000,
+  "send_errors": 0,
+  "pps": 1000,
+  "start_ns": 4441324209891,
+  "interval_ns": 1000000,
+  "size": 100
+ },
+ "detector": {
+  "interval_ms": 20.0,
+  "mult": 3,
+  "arm_after": 5,
+  "t_start_ns": 4441709120093,
+  "t_armed_ns": 4441789209316,
+  "t_detect_ns": 4443629269111,
+  "t_repair_done_ns": 4443635358033,
+  "repair_rc": 0,
+  "probes": 97
+ },
+ "recv_csv": "raw/srv6_005.csv",
+ "rc": {
+  "sender": 0,
+  "receiver": 0,
+  "detector": 0
+ }
+}

@@ -1,0 +1,22 @@
+2001:db8:12::/64 dev to2 proto kernel metric 256 pref medium
+2001:db8:13::/64 dev to3 proto kernel metric 256 pref medium
+2001:db8:25::/64 nhid 22 via fe80::dc72:4aff:fe61:cffa dev to2 proto ospf metric 20 pref medium
+2001:db8:34::/64 nhid 25 via fe80::d063:c5ff:fe77:6b9e dev to3 proto ospf metric 20 pref medium
+2001:db8:45::/64 nhid 47 proto ospf metric 20 pref medium
+	nexthop via fe80::dc72:4aff:fe61:cffa dev to2 weight 1 
+	nexthop via fe80::d063:c5ff:fe77:6b9e dev to3 weight 1 
+2001:db8:a1::/64 dev toh1 proto kernel metric 256 pref medium
+2001:db8:a5::/65  encap seg6 mode encap segs 2 [ fc00:2::1 fc00:5::d6 ] dev to2 metric 1024 pref medium
+2001:db8:a5::/64 nhid 22 via fe80::dc72:4aff:fe61:cffa dev to2 proto ospf metric 20 pref medium
+fc00:1::1  encap seg6local action End dev sid0 metric 1024 pref medium
+fc00:1::/32 dev sid0 proto kernel metric 256 pref medium
+fc00:2::/32 nhid 22 via fe80::dc72:4aff:fe61:cffa dev to2 proto ospf metric 20 pref medium
+fc00:3::/32 nhid 25 via fe80::d063:c5ff:fe77:6b9e dev to3 proto ospf metric 20 pref medium
+fc00:4::/32 nhid 25 via fe80::d063:c5ff:fe77:6b9e dev to3 proto ospf metric 20 pref medium
+fc00:5::/32 nhid 22 via fe80::dc72:4aff:fe61:cffa dev to2 proto ospf metric 20 pref medium
+fe80::/64 dev toh1 proto kernel metric 256 pref medium
+fe80::/64 dev to2 proto kernel metric 256 pref medium
+fe80::/64 dev to3 proto kernel metric 256 pref medium
+fe80::/64 dev sid0 proto kernel metric 256 pref medium
+
+2001:db8:a5::/65  encap seg6 mode encap segs 2 [ fc00:2::1 fc00:5::d6 ] dev to2 metric 1024 pref medium

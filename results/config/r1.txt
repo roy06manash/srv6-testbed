@@ -1,0 +1,57 @@
+### r1: ip -6 addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 state UNKNOWN qlen 1000
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: toh1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 state UP qlen 1000
+    inet6 2001:db8:a1::1/64 scope global nodad 
+       valid_lft forever preferred_lft forever
+    inet6 fe80::b0c8:d2ff:fe2c:fe29/64 scope link 
+       valid_lft forever preferred_lft forever
+3: to2@toh1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 state UP qlen 1000
+    inet6 2001:db8:12::1/64 scope global nodad 
+       valid_lft forever preferred_lft forever
+    inet6 fe80::60f5:65ff:fef2:b5a3/64 scope link 
+       valid_lft forever preferred_lft forever
+4: to3@toh1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 state UP qlen 1000
+    inet6 2001:db8:13::1/64 scope global nodad 
+       valid_lft forever preferred_lft forever
+    inet6 fe80::40ef:dfff:feed:1c29/64 scope link 
+       valid_lft forever preferred_lft forever
+5: sid0: <BROADCAST,NOARP,UP,LOWER_UP> mtu 1500 state UNKNOWN qlen 1000
+    inet6 fe80::649f:7eff:fe53:eff2/64 scope link 
+       valid_lft forever preferred_lft forever
+
+### r1: ip -6 route
+2001:db8:12::/64 dev to2 proto kernel metric 256 pref medium
+2001:db8:13::/64 dev to3 proto kernel metric 256 pref medium
+2001:db8:a1::/64 dev toh1 proto kernel metric 256 pref medium
+2001:db8:a5::/64 via 2001:db8:12::2 dev to2 metric 100 pref medium
+fc00:1::1  encap seg6local action End dev sid0 metric 1024 pref medium
+fc00:2::/32 via 2001:db8:12::2 dev to2 metric 1024 pref medium
+fc00:3::/32 via 2001:db8:13::3 dev to3 metric 1024 pref medium
+fe80::/64 dev toh1 proto kernel metric 256 pref medium
+fe80::/64 dev to2 proto kernel metric 256 pref medium
+fe80::/64 dev to3 proto kernel metric 256 pref medium
+fe80::/64 dev sid0 proto kernel metric 256 pref medium
+
+### r1: seg6 sysctls
+net.ipv4.conf.all.forwarding = 0
+net.ipv4.conf.default.forwarding = 0
+net.ipv4.conf.to2.forwarding = 0
+net.ipv4.conf.to3.forwarding = 0
+net.ipv4.conf.toh1.forwarding = 0
+net.ipv6.conf.all.forwarding = 1
+net.ipv6.conf.all.seg6_enabled = 1
+net.ipv6.conf.all.seg6_require_hmac = 0
+net.ipv6.conf.default.forwarding = 1
+net.ipv6.conf.default.seg6_enabled = 1
+net.ipv6.conf.default.seg6_require_hmac = 0
+net.ipv6.conf.to2.forwarding = 1
+net.ipv6.conf.to2.seg6_enabled = 1
+net.ipv6.conf.to2.seg6_require_hmac = 0
+net.ipv6.conf.to3.forwarding = 1
+net.ipv6.conf.to3.seg6_enabled = 1
+net.ipv6.conf.to3.seg6_require_hmac = 0
+net.ipv6.conf.toh1.forwarding = 1
+net.ipv6.conf.toh1.seg6_enabled = 1
+net.ipv6.conf.toh1.seg6_require_hmac = 0

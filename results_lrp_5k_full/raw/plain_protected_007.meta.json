@@ -1,0 +1,25 @@
+{
+ "mode": "plain_protected",
+ "label": "plain_protected_007",
+ "verify": false,
+ "pps": 5000,
+ "duration": 10.0,
+ "t_fail_before_ns": 120116463432877,
+ "t_fail_applied_ns": 120116467413720,
+ "t_fail_wall_ns": 1795516913276338981,
+ "sender": {
+  "sent": 50000,
+  "send_errors": 0,
+  "pps": 5000,
+  "start_ns": 120114208532765,
+  "interval_ns": 200000,
+  "size": 100
+ },
+ "detector": null,
+ "recv_csv": "raw/plain_protected_007.csv",
+ "rc": {
+  "sender": 0,
+  "receiver": 0,
+  "detector": null
+ }
+}

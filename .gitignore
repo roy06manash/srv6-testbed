@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+results_v1_old/
+.DS_Store
+results_lrp_test/
+results_ospf_default_test/

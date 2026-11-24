@@ -1,0 +1,28 @@
+### h2: ip -6 addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 state UNKNOWN qlen 1000
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: hif@if4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 state UP qlen 1000
+    inet6 2001:db8:a5::2/64 scope global nodad 
+       valid_lft forever preferred_lft forever
+    inet6 fe80::883c:62ff:fe90:a43a/64 scope link 
+       valid_lft forever preferred_lft forever
+
+### h2: ip -6 route
+2001:db8:a5::/64 dev hif proto kernel metric 256 pref medium
+fe80::/64 dev hif proto kernel metric 256 pref medium
+default via 2001:db8:a5::1 dev hif metric 1024 pref medium
+
+### h2: seg6 sysctls
+net.ipv4.conf.all.forwarding = 0
+net.ipv4.conf.default.forwarding = 0
+net.ipv4.conf.hif.forwarding = 0
+net.ipv6.conf.all.forwarding = 0
+net.ipv6.conf.all.seg6_enabled = 0
+net.ipv6.conf.all.seg6_require_hmac = 0
+net.ipv6.conf.default.forwarding = 0
+net.ipv6.conf.default.seg6_enabled = 0
+net.ipv6.conf.default.seg6_require_hmac = 0
+net.ipv6.conf.hif.forwarding = 0
+net.ipv6.conf.hif.seg6_enabled = 1
+net.ipv6.conf.hif.seg6_require_hmac = 0

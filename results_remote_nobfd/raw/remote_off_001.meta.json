@@ -1,0 +1,25 @@
+{
+ "mode": "remote_off",
+ "label": "remote_off_001",
+ "verify": false,
+ "pps": 1000,
+ "duration": 10.0,
+ "t_fail_before_ns": 111917331367770,
+ "t_fail_applied_ns": 111917334569885,
+ "t_fail_wall_ns": 1795508714143495354,
+ "sender": {
+  "sent": 10000,
+  "send_errors": 0,
+  "pps": 1000,
+  "start_ns": 111915079036155,
+  "interval_ns": 1000000,
+  "size": 100
+ },
+ "detector": null,
+ "recv_csv": "raw/remote_off_001.csv",
+ "rc": {
+  "sender": 0,
+  "receiver": 0,
+  "detector": null
+ }
+}
