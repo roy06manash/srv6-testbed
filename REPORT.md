@@ -1,7 +1,8 @@
 # SRv6 path steering and measured failure recovery: local testbed report
 
+Author: Manash Roy
 
-
+Course: <your course>    Date: 26 November 2026
 
 ## 1. Problem statement
 
@@ -96,7 +97,7 @@ Independent cross-check: tshark (Wireshark 4.2) decoding of the same captures gi
 destination SIDs, Segments Left and Last Entry values at every hop and the same packet counts (2254
 on r1-r2 and r2-r5; 3606 on r1-r3, r3-r4 and r4-r5), and finds no routing header on r5-h2.
 
-[Insert screenshot: Wireshark, results/pcaps/srv6/r1_to2.pcap, routing header expanded]
+![Wireshark: SRH with SIDs and Segments Left (results/pcaps/srv6/r1_to2.pcap, r1 to r2)](plots/wireshark_srh.png)
 
 ### 4.2 Path steering without a failure
 
