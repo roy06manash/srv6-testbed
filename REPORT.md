@@ -57,7 +57,7 @@ configs for the OSPFv3 and overlay runs are in `results/config/frr/`).
   route at r1 with a single `ip route replace`.
 - Metrics: lost packets (sent minus received); interruption (largest arrival gap minus the 1 ms
   send interval); detection delay (failure applied -> detector decision); repair time (decision ->
-  switch command finished); restoration time (failure -> first packet after the outage).
+  switch command finished); restoration time (failure -> first packet after the interruption).
 - Repetition: 20 failures per mode, alternating which mode runs first to cancel drift. Neighbour
   caches are warmed on both paths before each run. SID verification uses one extra, unmeasured
   run per mode with `tcpdump` on all seven link points.
@@ -157,7 +157,7 @@ Plots (generated from `runs.csv` by `plot_results.py`; box = quartiles, dots = i
 ![Detection delay and repair command time](plots/3_detection_vs_repair.png)
 
 Findings:
-1. About 95 % of the outage is detection time; the policy switch itself takes 6-7 ms.
+1. About 95 % of the interruption is detection time; the policy switch itself takes 6-7 ms.
 2. Measurements agree with each other: detection + repair matches interruption, which matches lost
    packets at 1000 packets/s.
 3. The two modes show **no consistent difference**. SRv6 shows about 5 fewer lost packets (Welch
@@ -166,7 +166,7 @@ Findings:
    noise, not an SRv6 effect.
 
 Scaling check (10 runs per mode, probes every 20 ms instead of 50 ms): detection 61.8 ms (IPv6) and
-62.9 ms (SRv6), 68.2 and 69.2 lost packets. The outage shrinks about in proportion to the detection
+62.9 ms (SRv6), 68.2 and 69.2 lost packets. The interruption shrinks about in proportion to the detection
 time, which supports the measurement chain.
 
 ### 4.4 Routing-protocol baseline (OSPFv3, 10 runs)
@@ -185,11 +185,11 @@ primary path before the next run (`ospf_experiment.py`, `results_ospf/`).
 | Plain IPv6, OSPFv3 (hello 1 s, dead 3 s) | routing protocol | 2331.7 +/- 223.4 (2064-2737) | 2331.6 +/- 223.2 (2064-2736) |
 
 Findings:
-1. The OSPF outage is about 16 times longer. OSPF declares a neighbour dead only after the dead
+1. The OSPF interruption is about 16 times longer. OSPF declares a neighbour dead only after the dead
    interval (3 s) passes without hellos, counted from the last hello received (hence 2.1-2.7 s),
    then recomputes the path and installs the route. The scripted detector needs about 150 ms.
 2. This difference comes from the repair mechanism and its timers, **not** from SRv6 or from the
-   forwarding method. With OSPF's default timers (hello 10 s, dead 40 s) the outage is about 34 s
+   forwarding method. With OSPF's default timers (hello 10 s, dead 40 s) the interruption is about 34 s
    (section 4.10). Real networks shorten routing-protocol repair with BFD, which is measured in
    section 4.7.
 3. Loss percentages are not comparable between rows because the OSPF runs were 10 s long and the
@@ -236,7 +236,7 @@ Findings:
    (about 2.5-2.6 s), the same order as the plain OSPFv3 row in 4.4.
 2. `overlay_loose` and `overlay_pinned` do not differ beyond noise (difference 124 packets, about
    one standard error; Welch t about 1.0).
-3. With the BFD-like detector and a scripted switch to the explicit backup path, the outage is
+3. With the BFD-like detector and a scripted switch to the explicit backup path, the interruption is
    about 147 ms, roughly 17-18 times shorter than OSPF alone, and the same as the scripted modes
    in section 4.3 (142-148 ms). The OSPF underlay did not slow the repair and the overlay did not
    speed it up: the detector sets the recovery time.
@@ -265,7 +265,7 @@ For `overlay_pinned_fast` the detector fired 126.9 +/- 1.6 ms after the failure 
 analysis because the largest arrival gap preceded the failure.
 
 Findings:
-1. Every mode loses about 11-13 packets (an outage of roughly 11-13 ms), because FRRouting reacts
+1. Every mode loses about 11-13 packets (an interruption of roughly 11-13 ms), because FRRouting reacts
    to the carrier loss at once. Differences between modes are about one packet, within noise;
    pinning the path through r2 (traffic hairpins through r5 and r2 after the repair) costs nothing
    measurable.
@@ -275,7 +275,7 @@ Findings:
    arrival gaps of 35-46 ms at other moments of the run, with no extra packet loss (the lost-packet
    counts stay at 11-15): VM or receiver stalls, analysed in section 4.12. Medians and lost
    packets are the reliable figures for this table.
-4. Taken with 4.4 and 4.5: the outage is decided by how the failure is detected, not by SRv6. A
+4. Taken with 4.4 and 4.5: the interruption is decided by how the failure is detected, not by SRv6. A
    silent failure takes OSPF about 2.3-2.6 s (dead interval) and a fast detector about 150 ms; a
    carrier-loss failure takes OSPF about 12 ms. The "OSPF is 16 times slower" figure in 4.4 applies
    to the silent failure only.
@@ -303,8 +303,8 @@ Findings:
    faster, with no scripted switch. The repair time is set by the BFD detection time (3 x 50 ms).
 2. All four modes are within noise of each other (differences up to 14 packets against standard
    deviations of 12-23; Welch t against `overlay_off`: 0.9, 1.0 and -0.9). The scripted detector
-   and real BFD give the same outage, and SRv6 steering adds no measurable delay or gain.
-3. Together with 4.4-4.6, the outage is set by the failure-detection mechanism (silent failure:
+   and real BFD give the same interruption, and SRv6 steering adds no measurable delay or gain.
+3. Together with 4.4-4.6, the interruption is set by the failure-detection mechanism (silent failure:
    OSPF dead timer 2.3-2.6 s, BFD or scripted detector about 145 ms; link-down: about 12 ms), not
    by the forwarding method.
 
@@ -331,7 +331,7 @@ repair is faster than the arrival-gap jitter of the VM, so 6 of 10 runs were exc
 analysis (largest gap precedes the failure) and its remaining restoration figure is meaningless.
 
 Findings:
-1. The local repair loses 0-1 packets (under 1 ms of outage), against 11-13 packets (about 12 ms)
+1. The local repair loses 0-1 packets (under 1 ms of interruption), against 11-13 packets (about 12 ms)
    when OSPF repairs after a link-down. In this setup, a pre-installed backup path removes the
    control-plane reaction time.
 2. It only protects failures that the kernel sees as loss of carrier on the local interface. A
@@ -357,7 +357,7 @@ Failure on r1-r2 with BFD on all links (`results_bfd_all/`, mean +- sd of lost p
 
 Excluded: `overlay_loose_000` (no connectivity at the start of the run, almost no packets received)
 and `overlay_pinned_fast_002` (the scripted detector fired before the failure; that run also
-contains a 6.6 s outage that I did not explain).
+contains a 6.6 s interruption that I did not explain).
 
 Failure on the remote link r2-r5 (on path A, not adjacent to r1), `results_remote_bfd/` (BFD on r2-r5)
 and `results_remote_nobfd/` (BFD removed from r2-r5, OSPF dead timer only, hello 1 s / dead 3 s):
@@ -369,7 +369,7 @@ and `results_remote_nobfd/` (BFD removed from r2-r5, OSPF dead timer only, hello
 | no BFD on r2-r5 | Plain IPv6 | 9 | 2418.2 +- 314 | 2228 |
 | no BFD on r2-r5 | SRv6 loose | 9 | 2417.6 +- 322 | 2191 |
 
-BFD on the failing link shortens the outage from about 2.4 s to about 0.15 s (roughly 16 times).
+BFD on the failing link shortens the interruption from about 2.4 s to about 0.15 s (roughly 16 times).
 BFD on r1-r2 alone could not have protected this failure. IPv6 and SRv6 behave the same. In the BFD-on
 campaign the 10th plain-IPv6 run stopped with "OSPF did not return to the primary path", so that
 campaign has 9 runs per mode. In the BFD-off campaign `remote_off_009` received 53 of 10,000 packets
@@ -386,7 +386,7 @@ silent r1-r2 failure and restores the 1 s / 3 s timers and BFD afterwards (`resu
 | Plain IPv6 | 34,118.8 +- 292 | 33,741-34,530 | 34,119 |
 | SRv6 loose | 34,079.8 +- 178 | 33,900-34,313 | 34,080 |
 
-The outage is about 34 s for both, about 15 times the 1 s / 3 s result (2.3 s); the dead-interval ratio is
+The interruption is about 34 s for both, about 15 times the 1 s / 3 s result (2.3 s); the dead-interval ratio is
 13.3. All ten runs fall between 33.7 and 34.5 s, which is tighter than the 30-40 s I expected from the hello
 cycle, so I do not have a full explanation of the value. n = 5 per mode.
 
@@ -417,13 +417,13 @@ start faults. The first campaign is kept as evidence only.
 ### 4.12 How interruption is measured, and arrival-gap stalls
 
 Interruption is the largest arrival gap in which packets were lost, minus the nominal packet interval
-(`tools/outage_summary.py`); a run with no loss has interruption 0. `tools/gap_report.py` lists every gap over 10 ms.
-In the link-down campaign (40 runs) there were 40 outage gaps of 10.7-17.0 ms, starting about 1 ms before the
+(`tools/interruption_summary.py`); a run with no loss has interruption 0. `tools/gap_report.py` lists every gap over 10 ms.
+In the link-down campaign (40 runs) there were 40 interruption gaps of 10.7-17.0 ms, starting about 1 ms before the
 recorded failure time (so the receiver and the failure timestamps share a clock), and 12 gaps of 10-50 ms in which no
 packet was lost (packets arrived late, in a burst); 3 more occurred before the failure was injected. These are VM or receiver
-stalls, not outages. They explain why the mean of the previous "largest gap" metric was sometimes inflated. The rule
+stalls, not interruptions. They explain why the mean of the previous "largest gap" metric was sometimes inflated. The rule
 "gap containing the failure instant" is not used, because in a few runs the failure timestamp is taken after the
-outage has already ended (the `tc` or `ip` command returns late in the VM), so the lost-packet count and the loss-bearing gap are used.
+interruption has already ended (the `tc` or `ip` command returns late in the VM), so the lost-packet count and the loss-bearing gap are used.
 
 ### 4.13 Measured header overhead, including reduced encapsulation
 
@@ -459,7 +459,7 @@ Limitations that remain:
 - The local repair (4.8, 4.11) is hand-configured, covers carrier-loss failures only, and its loop-freedom was
   checked only by inspecting r3's route for this topology; there is no general analysis.
 - Two failure types were tested: silent packet loss and link-down.
-- Observed but not explained: the exact value of about 34 s with default OSPF timers; the 6.6 s outage in
+- Observed but not explained: the exact value of about 34 s with default OSPF timers; the 6.6 s interruption in
   `overlay_pinned_fast_002`; one SRv6 local-repair run that lost its backup path 4.4 s after the repair (4.11).
 - The results show behaviour of this testbed only and do not show an operational advantage of SRv6.
 
@@ -508,7 +508,7 @@ with a rule that ignores stalls (4.12); header overhead is measured, including r
 1. SRv6 works as specified: SIDs are visited in order, Segments Left counts down, overhead is 80 B (path A) and 96 B (path B).
 2. SRv6 reaches r3 and r4 even though they have no route to the destination; plain IPv6 does not (100/100 against 0/100 in the no-route test).
 3. Recovery is the same for IPv6 and SRv6 with the same mechanism: silent failure 147.5 vs 142.0 lost packets (20 runs each).
-4. Outage depends on detection and repair: OSPFv3 with tuned timers (1 s / 3 s) about 2.3 to 2.6 s, with default timers (10 s / 40 s) about 34 s; scripted detector or real BFD about 145 ms; link-down about 12 ms; pre-installed local backup under 1 ms (about 0.4 ms at 5,000 pps).
+4. Interruption depends on detection and repair: OSPFv3 with tuned timers (1 s / 3 s) about 2.3 to 2.6 s, with default timers (10 s / 40 s) about 34 s; scripted detector or real BFD about 145 ms; link-down about 12 ms; pre-installed local backup under 1 ms (about 0.4 ms at 5,000 pps).
 5. BFD must run on the failing link: with BFD on every core link a failure on a remote link is repaired in about 150 ms, without it in about 2.4 s.
 6. The local repair works the same without SRv6 (0.6 against 0.4 lost packets at 1,000 pps); it is TI-LFA-like only, and helps only when the link loses carrier.
 7. Measured overhead matches the RFC calculation exactly (80, 96 B; 64, 80 B and 40 B with reduced encapsulation).
@@ -522,7 +522,7 @@ time and loss were the same for SRv6 and plain IPv6 within noise (about 140-148 
 dominated by failure detection. A routing-protocol baseline (OSPFv3, hello 1 s / dead 3 s) took
 about 2.3 s to repair the same failure, roughly 16 times longer, which again points at detection
 time and not at the forwarding method. With SRv6 running over the OSPFv3 underlay, recovery was
-still about 2.5 s unless the fast detector switched the policy, in which case it was about 147 ms. With a real link-down (carrier loss) every setup, including plain OSPFv3, recovered in about 12 ms, and the scripted detector (127 ms) was slower than the routing protocol. Real BFD (50 ms x 3) registered with OSPFv3 cut the silent-failure outage to about 145 ms, the same as the scripted detector, with or without SRv6. The outage is set by how the failure is detected, not by SRv6. A pre-installed local backup policy (TI-LFA-like, not TI-LFA) removed the outage almost entirely (0.3 packets) when the link loses carrier, but does not help a silent failure. The control without SRv6 gave the same result (0.6 lost packets against 0.4), so that repair belongs to the pre-installed backup route, not to SRv6. Running BFD on every core link made a failure on a remote link repair in about 150 ms instead of about 2.4 s, and the OSPFv3 default timers (hello 10 s / dead 40 s) gave an outage of about 34 s. Header overhead was measured and matches the RFC values, with reduced encapsulation saving 16 B per packet, or the whole SRH for a single SID. Several runs were excluded (listed in the sections above), and three observations are not explained (section 5).
+still about 2.5 s unless the fast detector switched the policy, in which case it was about 147 ms. With a real link-down (carrier loss) every setup, including plain OSPFv3, recovered in about 12 ms, and the scripted detector (127 ms) was slower than the routing protocol. Real BFD (50 ms x 3) registered with OSPFv3 cut the silent-failure interruption to about 145 ms, the same as the scripted detector, with or without SRv6. The interruption is set by how the failure is detected, not by SRv6. A pre-installed local backup policy (TI-LFA-like, not TI-LFA) removed the interruption almost entirely (0.3 packets) when the link loses carrier, but does not help a silent failure. The control without SRv6 gave the same result (0.6 lost packets against 0.4), so that repair belongs to the pre-installed backup route, not to SRv6. Running BFD on every core link made a failure on a remote link repair in about 150 ms instead of about 2.4 s, and the OSPFv3 default timers (hello 10 s / dead 40 s) gave an interruption of about 34 s. Header overhead was measured and matches the RFC values, with reduced encapsulation saving 16 B per packet, or the whole SRH for a single SID. Several runs were excluded (listed in the sections above), and three observations are not explained (section 5).
 
 ## References
 
