@@ -417,7 +417,7 @@ start faults. The first campaign is kept as evidence only.
 ### 4.12 How interruption is measured, and arrival-gap stalls
 
 Interruption is the largest arrival gap in which packets were lost, minus the nominal packet interval
-(`tools/interruption_summary.py`); a run with no loss has interruption 0. `tools/gap_report.py` lists every gap over 10 ms.
+(`tools/outage_summary.py`); a run with no loss has interruption 0. `tools/gap_report.py` lists every gap over 10 ms.
 In the link-down campaign (40 runs) there were 40 interruption gaps of 10.7-17.0 ms, starting about 1 ms before the
 recorded failure time (so the receiver and the failure timestamps share a clock), and 12 gaps of 10-50 ms in which no
 packet was lost (packets arrived late, in a burst); 3 more occurred before the failure was injected. These are VM or receiver
@@ -479,7 +479,7 @@ with a rule that ignores stalls (4.12); header overhead is measured, including r
   action counter stayed at 0). Attaching them to a dummy interface (`sid0`) fixed it.
 - The first detector counted missed probe windows and fired falsely under short timers. It was
   replaced with a last-reply timer plus an arming phase. Results from the first detector (about
-  189 ms detection) are superseded and kept in `results_v1_old/` only for reference.
+  189 ms detection) are superseded and not included in the repository.
 - In the idle VM, timers fired 60-95 ms late (measured with `tools/gapprobe.py`), so the detector
   is started after the traffic, which keeps the CPUs awake. Under traffic, reply gaps were at most
   33 ms. Timers below about 100 ms are not reliable in an idle VM.

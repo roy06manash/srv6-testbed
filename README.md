@@ -123,7 +123,6 @@ From the Mac, any of these can be run as `multipass exec srv6 -- sudo ...` with 
 - `plots/`: generated figures (scripted IPv6 vs SRv6, all modes, detection vs repair)
 - `results/config/frr/`: FRRouting configs and running configs, `environment.txt` has versions
 - `results_20ms/`: scaling check with 20 ms probes
-- `results_v1_old/`: superseded first-detector run, kept for reference only
 
 ## Method in brief
 
