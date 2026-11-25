@@ -2,7 +2,7 @@
 
 Author: Manash Roy
 
-Course: <your course>    Date: 26 November 2026
+Course: CS6198    Date: 26 November 2026
 
 ## 1. Problem statement
 
