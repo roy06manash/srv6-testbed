@@ -204,6 +204,25 @@ traffic over it. A policy is a /65 route covering h2, so it wins over OSPF's /64
 match. Same traffic and failure as before, runs of 10 s, OSPF hello 1 s / dead 3 s
 (`scripts/overlay_up.sh`, `overlay_experiment.py`, `results_overlay/`).
 
+Policy definitions (`scripts/set_overlay.sh`, run inside r1). Each policy installs one route for
+2001:db8:a5::/65 at r1 and changes nothing in OSPFv3:
+
+- `loose`: `ip -6 route replace 2001:db8:a5::/65 encap seg6 mode encap segs fc00:5::d6 dev to2`.
+  One SID; OSPFv3 decides how the packet reaches r5.
+- `pinned-primary`: the same command with `segs fc00:2::1,fc00:5::d6 dev to2`. "Pinned" means the
+  segment list forces the path through r2's End SID. It is an SRv6 setting at r1, not an OSPF setting.
+- `pinned-backup`: `segs fc00:3::1,fc00:4::1,fc00:5::d6 dev to3`.
+- `protected`: `pinned-primary` at metric 10 and `pinned-backup` at metric 20 together, with
+  `ignore_routes_with_linkdown=1` on `to2` (section 4.8).
+- `off`: no /65 route; traffic follows OSPFv3's /64 route (plain IPv6).
+
+The OSPFv3 configuration is identical in every mode. It comes only from `scripts/ospf_up.sh` (area
+0.0.0.0, `ipv6 ospf6 network point-to-point`, `ipv6 ospf6 hello-interval` and `dead-interval` on
+the core links, `ipv6 ospf6 passive` on the host links) and `scripts/overlay_up.sh` (interface `sid0`
+added to area 0 as passive, so each locator fc00:N::/32 is advertised). BFD is added by
+`scripts/bfd_up.sh` or `scripts/bfd_all.sh` (`ipv6 ospf6 bfd profile fast`), and the default timers
+by `overlay_defaulttimers.py`.
+
 | Mode | Repair | Lost packets | Interruption (ms) |
 |---|---|---|---|
 | `overlay_loose` (one SID, fc00:5::d6) | OSPF only | 2629.7 +/- 281.0 (2046-3008) | 2629.4 +/- 281.1 |
